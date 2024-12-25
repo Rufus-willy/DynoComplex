@@ -3,6 +3,13 @@
 - GROMACS
 - Python
 - Snakemake
+- Sobtop (For generating small molecule topology files)
+
+## Acknowledgements
+
+This workflow uses [Sobtop](http://sobereva.com/soft/Sobtop/) developed by Dr. Tian Lu for generating small molecule topology files. If you use this workflow in your research, please cite Sobtop as:
+
+Tian Lu, Sobtop, Version [sobtop_1.0(dev5)], http://sobereva.com/soft/Sobtop (accessed on 24-12-2024)
 
 ## Usage
 
