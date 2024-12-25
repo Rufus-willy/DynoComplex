@@ -98,13 +98,13 @@ rule prep_md:
         "md/em.gro",
     shell:
         """
-        export OMP_NUM_THREADS=32
+        export OMP_NUM_THREADS={config[omp_threads]}
         gmx editconf -f {input} -o md/box.gro -c -d 1.0 -bt cubic
         gmx solvate -cp md/box.gro -o md/water.gro -p md/topol.top
         gmx grompp -f mdp/ions.mdp -c md/water.gro -p md/topol.top -o md/ions.tpr
         echo 16 | gmx genion -s md/ions.tpr -o md/ions.gro -p md/topol.top -pname NA -nname CL -neutral
         gmx grompp -f mdp/em.mdp -c md/ions.gro -p md/topol.top -o md/em.tpr -maxwarn 2
-        gmx mdrun -v -ntmpi 1 -ntomp 32 -deffnm md/em
+        gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -deffnm md/em
         cd md
         echo 0 | gmx genrestr -f cofactor.gro -o posres_cofactor.itp -fc 1000 1000 1000
         echo 0 | gmx genrestr -f ligand.gro -o posres_ligand.itp -fc 1000 1000 1000
@@ -121,15 +121,15 @@ rule md:
         xtc="md/md.xtc"
     shell:
         """
-        export OMP_NUM_THREADS=32
+        export OMP_NUM_THREADS={config[omp_threads]}
         gmx grompp -f mdp/nvt.mdp -c {input} -r {input} -p md/topol.top -o md/nvt.tpr -maxwarn 4
-        gmx mdrun -v -ntmpi 1 -ntomp 32 -gpu_id 0 -deffnm md/nvt
+        gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/nvt
         gmx grompp -f mdp/nvt2.mdp -c md/nvt.gro -r md/nvt.gro -n md/index.ndx -p md/topol.top -o md/nvt2.tpr -maxwarn 5
-        gmx mdrun -v -ntmpi 1 -ntomp 32 -gpu_id 0 -deffnm md/nvt2
+        gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/nvt2
         gmx grompp -f mdp/npt.mdp -c md/nvt2.gro -r md/nvt2.gro -n md/index.ndx -p md/topol.top -o md/npt.tpr -maxwarn 4
-        gmx mdrun -v -ntmpi 1 -ntomp 32 -gpu_id 0 -deffnm md/npt
+        gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/npt
         gmx grompp -f mdp/md.mdp -c md/npt.gro -r md/npt.gro -n md/index.ndx -p md/topol.top -o md/md.tpr -maxwarn 4
-        gmx mdrun -v -ntmpi 1 -ntomp 32 -gpu_id 0 -deffnm md/md
+        gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/md
         touch {output.gro}
         touch {output.xtc}
         """
