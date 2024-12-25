@@ -1,0 +1,4 @@
+# 输入文件
+protein_file: "/home/suwenbin/autogromacs/doubleSub/input/protein.pdb"
+ligand_file: "/home/suwenbin/autogromacs/doubleSub/input/ligand.pdb"
+cofactor_file: "/home/suwenbin/autogromacs/doubleSub/input/cofactor.pdb"
