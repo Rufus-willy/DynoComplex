@@ -4,12 +4,16 @@
 - Python
 - Snakemake
 - Sobtop (For generating small molecule topology files)
+- s_mmpbsa (For calculating mmpbsa)
 
 ## Acknowledgements
 
-This workflow uses [Sobtop](http://sobereva.com/soft/Sobtop/) developed by Dr. Tian Lu for generating small molecule topology files. If you use this workflow in your research, please cite Sobtop as:
+Sobtop:
+This workflow uses [Sobtop_1.0(dev5)](http://sobereva.com/soft/Sobtop/) developed by Dr. Tian Lu for generating small molecule topology files. If you use this workflow in your research, please cite Sobtop as:
 
 Tian Lu, Sobtop, Version [sobtop_1.0(dev5)], http://sobereva.com/soft/Sobtop (accessed on 24-12-2024)
+s_mmpbsa:
+This workflow uses [s_mmpbsa-0.6.7](https://github.com/Supernova4869/s_mmpbsa) developed by jiaxing_zhang@outlook.com for calculating mmpbsa.
 
 ## Usage
 
