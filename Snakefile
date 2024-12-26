@@ -117,7 +117,7 @@ rule md:
     input:
         "md/em.gro"
     output:
-        gro="md/md.gro",
+        tpr="md/md.tpr",
         xtc="md/md.xtc"
     shell:
         """
@@ -130,6 +130,23 @@ rule md:
         gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/npt
         gmx grompp -f mdp/md.mdp -c md/npt.gro -r md/npt.gro -n md/index.ndx -p md/topol.top -o md/md.tpr -maxwarn 4
         gmx mdrun -v -ntmpi 1 -ntomp {config[omp_threads]} -gpu_id {config[gpu_id]} -deffnm md/md
-        touch {output.gro}
+        touch {output.tpr}
         touch {output.xtc}
+        """
+rule mmpbsa:
+    input:
+        tpr="md/md.tpr",
+        xtc="md/md.xtc"
+    output:
+        "md/_MMPBSA_system_WT.sm"
+    shell:
+        """
+        export OMP_NUM_THREADS={config[omp_threads]}
+        export RUST_BACKTRACE=1
+        touch {input.tpr}
+        touch {input.xtc}
+        cd md
+        python ../run_mmpbsa.py -t md.tpr -x md.xtc -n index.ndx -p {config[protein_index]} -l {config[ligand_index]} -i 1
+        cd ..
+        touch {output}
         """
