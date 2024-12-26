@@ -6,3 +6,8 @@ cofactor_file: "/home/suwenbin/autogromacs/doubleSub/input/cofactor.pdb"
 #configure
 omp_threads: 32   
 gpu_id: 0 
+
+#mmpbsa
+protein_index:1
+ligand_index:14
+cofactor_index:13
