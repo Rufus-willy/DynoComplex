@@ -51,3 +51,14 @@ This workflow uses [s_mmpbsa-0.6.7](https://github.com/Supernova4869/s_mmpbsa) d
 ### extract.py
 - Purpose: Extract topology sections
 - Usage: `python extract.py -i <input_file> -o <output_file>`
+
+### run_mmpbsa.py
+- Purpose: Automate MM-PBSA calculations using s_mmpbsa
+- Usage: `python run_mmpbsa.py -t <tpr_file> -x <xtc_file> -n <ndx_file> -p <protein_group> -l <ligand_group> -i <interval>`
+- Parameters:
+  - `-t, --tpr`: Input tpr file from MD simulation
+  - `-x, --xtc`: Input trajectory file
+  - `-n, --ndx`: Input index file
+  - `-p, --protein`: Protein group number in index file
+  - `-l, --ligand`: Ligand group number in index file
+  - `-i, --interval`: Analysis interval in ns (default: 1)
